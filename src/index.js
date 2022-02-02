@@ -1,25 +1,8 @@
 import * as THREE from 'three';
+import * as initialize from './initialize';
 
 // Objects
 import SphereInst from './sphereInst';
-
-const initializeLighting = (scene) => {
-    const ambient = new THREE.AmbientLight(0x404040, 0.2);
-    const direct = new THREE.DirectionalLight(0x404040, 0.4);
-    const spot = new THREE.SpotLight(0xccccff)
-
-    direct.position.x = 5;
-    direct.position.y = 7;
-    direct.position.z = -2.5;
-
-    spot.position.x = -4;
-    spot.position.y = -3;
-    spot.position.z = 5;
-
-    scene.add(ambient);
-    scene.add(direct);
-    scene.add(spot);
-}
 
 window.onload = () => {
     const fov = 75;
@@ -38,7 +21,7 @@ window.onload = () => {
     document.body.appendChild(renderer.domElement);
 
     // Lighting
-    initializeLighting(scene);
+    initialize.setLighting(scene);
 
     // Objects
     const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
