@@ -1,23 +1,16 @@
-import { Scene, PerspectiveCamera, WebGLRenderer } from 'three';
+import { Scene, WebGLRenderer } from 'three';
+import * as initialize from './initialize';
 
 // Objects
 import SphereInst from './sphereInst';
 
 window.onload = () => {
-    const fov = 75;
-    const aspectRatio = window.innerWidth / window.innerHeight
-    const clipping = {
-        near: 0.1,
-        far: 1000
-    }
-
     // Initialize Scene
     const scene = new Scene();
-    const camera = new PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
     const renderer = new WebGLRenderer();
+    const camera = initialize.setCamera();
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
+    initialize.setLighting(scene);
 
     // Objects
     const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
@@ -32,8 +25,8 @@ window.onload = () => {
     scene.add(sphereInst2.mesh);
     scene.add(sphereInst3.mesh);
 
-    camera.position.z = 5;
-
     // Render
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
     renderer.render(scene, camera);
 }
