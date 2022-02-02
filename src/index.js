@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer } from 'three';
 
 // Objects
 import SphereInst from './sphereInst';
@@ -12,35 +12,27 @@ window.onload = () => {
     }
 
     // Initialize Scene
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
-    const renderer = new THREE.WebGLRenderer();
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
+    const renderer = new WebGLRenderer();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
     // Add Objects
-    const sphereInst1 = new SphereInst();
-    const sphereInst2 = new SphereInst();
+    const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
+    const sphereInst2 = new SphereInst({ color: 0x00ffff });
 
-    scene.add(sphereInst1.getMesh());
-    scene.add(sphereInst2.getMesh());
+    scene.add(sphereInst1.mesh);
+    scene.add(sphereInst2.mesh);
 
-    sphereInst1.getMesh().position.x = -2;
-    sphereInst1.getMesh().position.y = -1;
-    sphereInst2.getMesh().position.x = 2;
-    sphereInst2.getMesh().position.y = 1;
+    sphereInst1.mesh.position.x = -2;
+    sphereInst1.mesh.position.y = -1;
+    sphereInst2.mesh.position.x = 2;
+    sphereInst2.mesh.position.y = 1;
 
     camera.position.z = 5;
 
-    function animate() {
-        requestAnimationFrame(animate);
-
-        sphereInst1.getMesh().rotation.x += 0.01;
-        sphereInst1.getMesh().rotation.y += 0.01;
-
-        renderer.render(scene, camera);
-    };
-
-    animate();
+    // Render
+    renderer.render(scene, camera);
 }

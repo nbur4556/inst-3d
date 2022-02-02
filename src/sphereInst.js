@@ -1,13 +1,9 @@
 import { SphereGeometry, MeshBasicMaterial, Mesh } from "three";
 
-function SphereInst() {
-    const geometry = new SphereGeometry();
-    const material = new MeshBasicMaterial({ color: 0xffff00 });
-    this.cube = new Mesh(geometry, material);
-
-    this.getMesh = () => {
-        return this.cube;
-    }
+function SphereInst(args) {
+    this.geometry = new SphereGeometry(args?.size);
+    this.material = new MeshBasicMaterial({ color: args?.color });
+    this.mesh = new Mesh(this.geometry, this.material);
 }
 
 export default SphereInst;
