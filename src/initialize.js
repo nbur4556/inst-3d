@@ -17,3 +17,19 @@ export const setLighting = (scene) => {
     scene.add(direct);
     scene.add(spot);
 }
+
+import { PerspectiveCamera } from 'three';
+
+export const setCamera = () => {
+    const fov = 75;
+    const aspectRatio = window.innerWidth / window.innerHeight
+    const clipping = {
+        near: 0.1,
+        far: 1000
+    }
+
+    const camera = new PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
+    camera.position.z = 5;
+
+    return camera
+}
