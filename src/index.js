@@ -1,7 +1,25 @@
-import { Scene, PerspectiveCamera, WebGLRenderer } from 'three';
+import * as THREE from 'three';
 
 // Objects
 import SphereInst from './sphereInst';
+
+const initializeLighting = (scene) => {
+    const ambient = new THREE.AmbientLight(0x404040, 0.2);
+    const direct = new THREE.DirectionalLight(0x404040, 0.4);
+    const spot = new THREE.SpotLight(0xccccff)
+
+    direct.position.x = 5;
+    direct.position.y = 7;
+    direct.position.z = -2.5;
+
+    spot.position.x = -4;
+    spot.position.y = -3;
+    spot.position.z = 5;
+
+    scene.add(ambient);
+    scene.add(direct);
+    scene.add(spot);
+}
 
 window.onload = () => {
     const fov = 75;
@@ -12,12 +30,15 @@ window.onload = () => {
     }
 
     // Initialize Scene
-    const scene = new Scene();
-    const camera = new PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
-    const renderer = new WebGLRenderer();
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
+    const renderer = new THREE.WebGLRenderer();
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+
+    // Lighting
+    initializeLighting(scene);
 
     // Objects
     const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
