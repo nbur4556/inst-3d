@@ -1,5 +1,6 @@
 import { Scene, WebGLRenderer, Raycaster, Vector2 } from 'three';
 import * as initialize from './initialize';
+import animate from './animate.js';
 
 // Objects
 import SphereInst from './sphereInst';
@@ -33,8 +34,6 @@ window.onload = () => {
     spheres[1].setPosition({ x: 2 });
     spheres[2].setPosition({ y: 2, z: .95 });
 
-    scene.add(spheres[0].generateRingEffect().mesh);
-
     spheres.forEach(sphere => {
         scene.add(sphere.mesh);
     });
@@ -45,8 +44,9 @@ window.onload = () => {
     let intersectID = null;
 
     // Run per animation frame
-    const animate = () => {
-        requestAnimationFrame(animate);
+    const renderFrame = () => {
+        requestAnimationFrame(renderFrame);
+        animate(spheres);
 
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(scene.children);
@@ -69,5 +69,5 @@ window.onload = () => {
 
         renderer.render(scene, camera);
     }
-    animate();
+    renderFrame();
 }

@@ -1,7 +1,7 @@
 import { SphereGeometry, TorusGeometry, MeshLambertMaterial, Mesh } from "three";
 
 function RingEffect(args) {
-    this.geometry = new TorusGeometry(0.1, 0.05, 5, 100);
+    this.geometry = new TorusGeometry(0.1, 0.01, 5, 100);
     this.material = new MeshLambertMaterial({ color: args?.color });
     this.mesh = new Mesh(this.geometry, this.material);
 }
@@ -11,15 +11,17 @@ function SphereInst(args) {
     this.geometry = new SphereGeometry(args?.size);
     this.material = new MeshLambertMaterial({ color: this.color });
     this.mesh = new Mesh(this.geometry, this.material);
+    this.ringEffect = null;
 
     this.generateRingEffect = () => {
-        const ringEffect = new RingEffect({ color: this.color });
+        this.ringEffect = new RingEffect({ color: this.color });
 
-        ringEffect.mesh.position.x = 0;
-        ringEffect.mesh.position.y = 0;
-        ringEffect.mesh.position.z = 0;
+        // Set position
+        this.ringEffect.mesh.position.x = 0;
+        this.ringEffect.mesh.position.y = 0;
+        this.ringEffect.mesh.position.z = 0;
 
-        return ringEffect;
+        return this.ringEffect;
     }
 
     this.setPosition = ({ x, y, z }) => {
