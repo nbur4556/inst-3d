@@ -50,7 +50,9 @@ window.onload = () => {
         pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
     });
 
-    window.addEventListener('click', () => {
+    let activeSphere;
+
+    window.addEventListener('mousedown', () => {
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(scene.children);
 
@@ -60,8 +62,22 @@ window.onload = () => {
                 if (sphere.mesh.uuid === intersects[0].object.uuid) {
                     const ringEffect = sphere.generateRingEffect();
                     scene.add(ringEffect.mesh);
+
+                    activeSphere = sphere;
+                    activeSphere.mesh.scale.x -= 0.05;
+                    activeSphere.mesh.scale.y -= 0.05;
+                    activeSphere.mesh.scale.z -= 0.05;
                 }
             });
+        }
+    });
+
+    window.addEventListener('mouseup', () => {
+        if (activeSphere) {
+            activeSphere.mesh.scale.x += 0.05;
+            activeSphere.mesh.scale.y += 0.05;
+            activeSphere.mesh.scale.z += 0.05;
+            activeSphere = null;
         }
     });
 }
