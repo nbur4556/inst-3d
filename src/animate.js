@@ -1,4 +1,4 @@
-const animateRingEffect = (sphere) => {
+const animateRingEffect = (sphere, scene) => {
     const effectSpeed = .3;
     const ringEffect = sphere.ringEffect;
 
@@ -9,18 +9,19 @@ const animateRingEffect = (sphere) => {
     // Dispose on opacity 0
     if (ringEffect.material.opacity <= 0) {
         sphere.ringEffect = null;
-        ringEffect.mesh.geometry.dispose();
-        ringEffect.mesh.material.dispose();
+        scene.remove(ringEffect.mesh);
+
+        //! geometries and materials are not being disposed
+        ringEffect.geometry.dispose();
+        ringEffect.material.dispose();
     }
 }
 
-const animate = (spheres) => {
+const animate = (spheres, scene) => {
     spheres.forEach(sphere => {
-
         if (sphere.ringEffect) {
-            animateRingEffect(sphere);
+            animateRingEffect(sphere, scene);
         }
-
     });
 }
 

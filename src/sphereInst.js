@@ -1,7 +1,7 @@
 import { SphereGeometry, TorusGeometry, MeshLambertMaterial, Mesh } from "three";
 
 function RingEffect(args) {
-    this.geometry = new TorusGeometry(0.5, 0.05, 5, 100);
+    this.geometry = new TorusGeometry(0.5, 0.05, 3, 100);
     this.material = new MeshLambertMaterial({ color: args?.color, transparent: true, opacity: 1 });
     this.mesh = new Mesh(this.geometry, this.material);
 }

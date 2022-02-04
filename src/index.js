@@ -31,12 +31,13 @@ window.onload = () => {
     });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0xeeeeee, 1)
     document.body.appendChild(renderer.domElement);
 
     // Run per animation frame
     const renderFrame = () => {
         requestAnimationFrame(renderFrame);
-        animate(spheres);
+        animate(spheres, scene);
         renderer.render(scene, camera);
     }
     renderFrame();

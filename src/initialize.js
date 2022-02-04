@@ -1,8 +1,8 @@
 import { AmbientLight, DirectionalLight, SpotLight } from 'three'
 
 export const setLighting = (scene) => {
-    const ambient = new AmbientLight(0x404040, 0.2);
-    const direct = new DirectionalLight(0x404040, 0.4);
+    const ambient = new AmbientLight(0x404040, 0.5);
+    const direct = new DirectionalLight(0x404040, 1);
     const spot = new SpotLight(0xccccff);
 
     direct.position.x = 5;
