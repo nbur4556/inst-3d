@@ -23,6 +23,7 @@ window.onload = () => {
     });
 
     // Objects
+    const spheres = [];
     const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
     const sphereInst2 = new SphereInst({ color: 0x00ffff });
     const sphereInst3 = new SphereInst({ size: 0.75, color: 0xff00ff });
@@ -31,6 +32,10 @@ window.onload = () => {
     sphereInst2.setPosition({ x: 2 });
     sphereInst3.setPosition({ y: 2, z: .95 });
 
+    spheres.push(sphereInst1);
+    spheres.push(sphereInst2);
+    spheres.push(sphereInst3);
+
     scene.add(sphereInst1.mesh);
     scene.add(sphereInst2.mesh);
     scene.add(sphereInst3.mesh);
@@ -38,19 +43,33 @@ window.onload = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
+
+    let intersectID = null;
+
     // Run per animation frame
-    const render = () => {
-        requestAnimationFrame(render);
+    const animate = () => {
+        requestAnimationFrame(animate);
 
         raycaster.setFromCamera(pointer, camera);
         const intersects = raycaster.intersectObjects(scene.children);
 
-        // Get all intersections
-        for (let i = 0; i < intersects.length; i++) {
-            intersects[i].object.material.color.set(0xff0000);
+        // Mouse On
+        if (intersects.length > 0) {
+            intersectID = intersects[0].object.uuid;
+            intersects[0].object.material.color.set(0xff0000);
+        }
+        // Mouse Off
+        else if (intersectID !== null) {
+            spheres.forEach(sphere => {
+                if (sphere.mesh.uuid === intersectID) {
+                    sphere.resetColor();
+                }
+            });
+
+            intersectID = null;
         }
 
         renderer.render(scene, camera);
     }
-    render();
+    animate();
 }
