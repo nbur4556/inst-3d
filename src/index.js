@@ -1,4 +1,4 @@
-import { Scene, WebGLRenderer } from 'three';
+import { Scene, WebGLRenderer, Raycaster, Vector2 } from 'three';
 import * as initialize from './initialize';
 
 // Objects
@@ -11,6 +11,16 @@ window.onload = () => {
     const camera = initialize.setCamera();
 
     initialize.setLighting(scene);
+
+    const raycaster = new Raycaster();
+    const pointer = new Vector2();
+
+    window.addEventListener('pointermove', (e) => {
+        // Normalize pointer coordinates
+        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        console.log(pointer)
+    })
 
     // Objects
     const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
