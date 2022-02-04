@@ -33,6 +33,8 @@ window.onload = () => {
     spheres[1].setPosition({ x: 2 });
     spheres[2].setPosition({ y: 2, z: .95 });
 
+    scene.add(spheres[0].generateRingEffect().mesh);
+
     spheres.forEach(sphere => {
         scene.add(sphere.mesh);
     });
