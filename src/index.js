@@ -23,26 +23,22 @@ window.onload = () => {
     });
 
     // Objects
-    const spheres = [];
-    const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
-    const sphereInst2 = new SphereInst({ color: 0x00ffff });
-    const sphereInst3 = new SphereInst({ size: 0.75, color: 0xff00ff });
+    const spheres = [
+        new SphereInst({ size: 1.5, color: 0xffff00 }),
+        new SphereInst({ color: 0x00ffff }),
+        new SphereInst({ size: 0.75, color: 0xff00ff })
+    ];
 
-    sphereInst1.setPosition({ x: -2, y: -1 });
-    sphereInst2.setPosition({ x: 2 });
-    sphereInst3.setPosition({ y: 2, z: .95 });
+    spheres[0].setPosition({ x: -2, y: -1 });
+    spheres[1].setPosition({ x: 2 });
+    spheres[2].setPosition({ y: 2, z: .95 });
 
-    spheres.push(sphereInst1);
-    spheres.push(sphereInst2);
-    spheres.push(sphereInst3);
-
-    scene.add(sphereInst1.mesh);
-    scene.add(sphereInst2.mesh);
-    scene.add(sphereInst3.mesh);
+    spheres.forEach(sphere => {
+        scene.add(sphere.mesh);
+    });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-
 
     let intersectID = null;
 
