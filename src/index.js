@@ -41,33 +41,26 @@ window.onload = () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    let intersectID = null;
-
     // Run per animation frame
     const renderFrame = () => {
         requestAnimationFrame(renderFrame);
         animate(spheres);
-
-        raycaster.setFromCamera(pointer, camera);
-        const intersects = raycaster.intersectObjects(scene.children);
-
-        // Mouse On
-        if (intersects.length > 0) {
-            intersectID = intersects[0].object.uuid;
-            intersects[0].object.material.color.set(0xff0000);
-        }
-        // Mouse Off
-        else if (intersectID !== null) {
-            spheres.forEach(sphere => {
-                if (sphere.mesh.uuid === intersectID) {
-                    sphere.resetColor();
-                }
-            });
-
-            intersectID = null;
-        }
-
         renderer.render(scene, camera);
     }
     renderFrame();
+
+    window.addEventListener('click', () => {
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        if (intersects.length > 0) {
+            // Create sphere effect on click sphere
+            spheres.forEach(sphere => {
+                if (sphere.mesh.uuid === intersects[0].object.uuid) {
+                    const ringEffect = sphere.generateRingEffect();
+                    scene.add(ringEffect.mesh);
+                }
+            });
+        }
+    });
 }
