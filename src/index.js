@@ -10,18 +10,10 @@ window.onload = () => {
     const scene = new Scene();
     const renderer = new WebGLRenderer();
     const camera = initialize.setCamera();
-
-    initialize.setLighting(scene);
-
     const raycaster = new Raycaster();
     const pointer = new Vector2();
 
-    // Set pointer coordinates on pointer move
-    window.addEventListener('pointermove', (e) => {
-        // Normalize pointer coordinates
-        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
-        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
-    });
+    initialize.setLighting(scene);
 
     // Objects
     const spheres = [
@@ -48,6 +40,14 @@ window.onload = () => {
         renderer.render(scene, camera);
     }
     renderFrame();
+
+    // EVENTS
+
+    window.addEventListener('pointermove', (e) => {
+        // Normalize pointer coordinates
+        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    });
 
     window.addEventListener('click', () => {
         raycaster.setFromCamera(pointer, camera);
