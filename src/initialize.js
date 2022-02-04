@@ -1,9 +1,9 @@
 import { AmbientLight, DirectionalLight, SpotLight } from 'three'
 
 export const setLighting = (scene) => {
-    const ambient = new AmbientLight(0x404040, 0.2);
-    const direct = new DirectionalLight(0x404040, 0.4);
-    const spot = new SpotLight(0xccccff)
+    const ambient = new AmbientLight(0xffffff, 0.4);
+    const direct = new DirectionalLight(0xffffff, 0.4);
+    const spot = new SpotLight(0xccccff, 0.8);
 
     direct.position.x = 5;
     direct.position.y = 7;
@@ -31,5 +31,5 @@ export const setCamera = () => {
     const camera = new PerspectiveCamera(fov, aspectRatio, clipping.near, clipping.far);
     camera.position.z = 5;
 
-    return camera
+    return camera;
 }
