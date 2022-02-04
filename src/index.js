@@ -15,12 +15,12 @@ window.onload = () => {
     const raycaster = new Raycaster();
     const pointer = new Vector2();
 
+    // Set pointer coordinates on pointer move
     window.addEventListener('pointermove', (e) => {
         // Normalize pointer coordinates
         pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
         pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        console.log(pointer)
-    })
+    });
 
     // Objects
     const sphereInst1 = new SphereInst({ size: 1.5, color: 0xffff00 });
@@ -35,8 +35,22 @@ window.onload = () => {
     scene.add(sphereInst2.mesh);
     scene.add(sphereInst3.mesh);
 
-    // Render
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-    renderer.render(scene, camera);
+
+    // Run per animation frame
+    const render = () => {
+        requestAnimationFrame(render);
+
+        raycaster.setFromCamera(pointer, camera);
+        const intersects = raycaster.intersectObjects(scene.children);
+
+        // Get all intersections
+        for (let i = 0; i < intersects.length; i++) {
+            intersects[i].object.material.color.set(0xff0000);
+        }
+
+        renderer.render(scene, camera);
+    }
+    render();
 }
